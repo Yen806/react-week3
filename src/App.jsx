@@ -76,7 +76,7 @@ function App() {
   }
   useEffect(() => {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, "$1");
-    if(token){
+    if (token) {
       axios.defaults.headers.common['Authorization'] = token;
       checkLogin()
     }
@@ -154,15 +154,15 @@ function App() {
   const openModal = (mode, product) => {
     setModalMode(mode);
     switch (mode) {
-			case 'create':
-				setTempProduct(defaultModalState);
-				break;
-			case 'edit':
-				setTempProduct(product);
-				break;
-			default:
-				break;
-		}
+      case 'create':
+        setTempProduct(defaultModalState);
+        break;
+      case 'edit':
+        setTempProduct(product);
+        break;
+      default:
+        break;
+    }
     modelRef.current.show()
   }
   const closeModal = () => {
@@ -246,7 +246,7 @@ function App() {
                           <td>
                             <div className="btn-group" role="group">
                               <button type="button" className="btn btn-outline-primary btn-sm" id={product.id} onClick={() => openModal('edit', product)}>編輯</button>
-                              <button type="button" className="btn btn-outline-danger btn-sm" id={product.id} onClick={()=> openDelModal(product)}>刪除</button>
+                              <button type="button" className="btn btn-outline-danger btn-sm" id={product.id} onClick={() => openDelModal(product)}>刪除</button>
                             </div>
                           </td>
                         </tr>
@@ -275,8 +275,8 @@ function App() {
           )
       }
 
-      <div className="modal" tabIndex="-1" ref={productRef}>
-        <div className="modal-dialog modal-xl">
+      <div className="modal" tabIndex="-1" ref={productRef} id="productModal">
+        <div className="modal-dialog modal-dialog-centered modal-xl">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">{modalMode === 'create' ? '新增產品' : '編輯產品'}</h5>
@@ -300,7 +300,7 @@ function App() {
                   </div>
                   <div className="border rounded-3">
                     <div className="mx-3 mt-2">
-                      {tempProduct.imagesUrl.map((item, index) => {
+                      {tempProduct.imagesUrl?.map((item, index) => {
                         return (<div key={index}>
                           <label htmlFor={`imagesUrl-${index + 1}`} className="form-label">副圖{index + 1}</label>
                           <div className="input-group mb-3">
@@ -333,6 +333,7 @@ function App() {
                     <div className="col-6">
                       <label htmlFor="category" className="form-label">分類</label>
                       <select id="category" className="form-select" name="category" value={tempProduct.category} onChange={getinputValue}>
+                        <option value="">請選擇</option>
                         <option value="蔬菜水果">蔬菜水果</option>
                         <option value="蛋與乳品">蛋與乳品</option>
                         <option value="水產海鮮">水產海鮮</option>
@@ -420,10 +421,10 @@ function App() {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">刪除產品</h5>
-              <button type="button" className="btn-close"  onClick={closeDelModal} aria-label="Close"></button>
+              <button type="button" className="btn-close" onClick={closeDelModal} aria-label="Close"></button>
             </div>
             <div className="modal-body">
-            你是否要刪除
+              你是否要刪除
               <span className="text-danger">{tempProduct.title}</span>
             </div>
             <div className="modal-footer">
